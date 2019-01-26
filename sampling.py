@@ -12,7 +12,7 @@ ratio = len(domainSet) / targetSampling
 
 outputSize = 0
 with open (outputFile, 'w') as f:
-    for i in range(domainSet):
+    for i in range(len(domainSet)):
         if random.randint(1,ratio) == 1:
             f.write(domainSet[i] + "\n")
             outputSize += 1
