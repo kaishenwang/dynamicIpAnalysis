@@ -14,7 +14,7 @@ outputSize = 0
 with open (outputFile, 'w') as f:
     for i in range(len(domainSet)):
         if random.randint(1,ratio) == 1:
-            f.write(domainSet[i] + "\n")
+            f.write(domainSet[i])
             outputSize += 1
             if outputSize == targetSampling:
                 break
