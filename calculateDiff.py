@@ -29,4 +29,4 @@ for i in range(1, 16):
                 differenceCount += 1
     differences.append(differenceCount)
 
-    print (differences)
+print (differences)
