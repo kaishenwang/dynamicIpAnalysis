@@ -1,14 +1,14 @@
 import sys
 import random
 
-targetSampling = 50000
+targetSampling = 100000
 inputFile = '/data1/nsrg/kwang40/2019-01-17-urls.txt'
 outputFile = sys.argv[1]
 
 with open(inputFile) as f:
     domainSet = f.readlines()
 
-ratio = len(domainSet) / targetSampling
+ratio = len(domainSet) / targetSampling / 2
 
 outputSize = 0
 with open (outputFile, 'w') as f:
