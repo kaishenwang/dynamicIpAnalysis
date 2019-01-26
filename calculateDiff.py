@@ -25,8 +25,8 @@ for i in range(1, 16):
             if len(domainIpDict[domain] > 0):
                 differenceCount += 1
             continue
-            if data["data"]["ipv4_addresses"][0] not in domainIpDict[domain].keys():
-                differenceCount += 1
+        if data["data"]["ipv4_addresses"][0] not in domainIpDict[domain].keys():
+            differenceCount += 1
     differences.append(differenceCount)
 
 print (differences)
