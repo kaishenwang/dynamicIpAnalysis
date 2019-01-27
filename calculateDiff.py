@@ -22,7 +22,7 @@ for i in range(1, 16):
         data = json.loads(line)
         domain = data["name"]
         if data["status"] != "NOERROR":
-            if len(domainIpDict[domain] > 0):
+            if len(domainIpDict[domain]) > 0:
                 differenceCount += 1
             continue
         if data["data"]["ipv4_addresses"][0] not in domainIpDict[domain].keys():
