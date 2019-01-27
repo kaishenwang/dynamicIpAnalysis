@@ -32,7 +32,6 @@ for i in range(1, 16):
                 repeatedDomains[domain] = 0
             else:
                 continue
-        uniqueDomain[domain] = 1
         if data["status"] != "NOERROR":
             if len(domainIpDict[domain]) > 0:
                 differenceCount += 1
