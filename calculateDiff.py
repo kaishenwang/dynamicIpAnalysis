@@ -1,6 +1,7 @@
 import json
 from os import listdir
 from os.path import isfile, join
+import math
 
 folderPath = "/home/kwang40/alookupResult/"
 files = [f for f in listdir(folderPath) if isfile(join(folderPath, f))]
@@ -28,18 +29,21 @@ for i in range(1, len(files)):
     newIpCount = 0
     disAppearIpCount = 0
     ipChangeCount = 0
+    validIpCount = len(domainIpDict)
     for line in rr:
         data = json.loads(line)
         domain = data["name"]
         if data["status"] != "NOERROR":
+            validIpCount -= 1
             if len(domainIpDict[domain]) > 0:
                 disAppearIpCount += 1
         elif len(domainIpDict[domain]) == 0:
             newIpCount += 1
         elif data["data"]["ipv4_addresses"][0] not in domainIpDict[domain].keys():
             ipChangeCount += 1
-    message = str(i * 1.0 / 3) + "hours: "
-    message += "new ip " + str(newIpCount*100.0/len(domainIpDict)) + ", "
-    message += "disappear ip " + str(disAppearIpCount*100.0/len(domainIpDict)) + ", "
-    message += "ip value change " + str(ipChangeCount*100.0/len(domainIpDict))
+    message = str(i)+","+str(i/3.0)+","
+    message += str(math.log(validIpCount)+","
+    message += str(math.log(newIpCount*100.0/len(domainIpDict)))+","
+    message += str(math.log(disAppearIpCount*100.0/len(domainIpDict)))+","
+    message += str(math.log(ipChangeCount*100.0/len(domainIpDict)))
     print (message)
