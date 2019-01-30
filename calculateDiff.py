@@ -42,8 +42,8 @@ for i in range(1, len(files)):
         elif data["data"]["ipv4_addresses"][0] not in domainIpDict[domain].keys():
             ipChangeCount += 1
     message = str(i)+","+str(i/3.0)+","
-    message += str(math.log(validIpCount)+","
-    message += str(math.log(newIpCount*100.0/len(domainIpDict)))+","
-    message += str(math.log(disAppearIpCount*100.0/len(domainIpDict)))+","
-    message += str(math.log(ipChangeCount*100.0/len(domainIpDict)))
+    message += str(math.log(validIpCount*1.0/len(domainIpDict)))+","
+    message += str(math.log(newIpCount*1.0/len(domainIpDict)))+","
+    message += str(math.log(disAppearIpCount*1.0/len(domainIpDict)))+","
+    message += str(math.log(ipChangeCount*1.0/len(domainIpDict)))
     print (message)
