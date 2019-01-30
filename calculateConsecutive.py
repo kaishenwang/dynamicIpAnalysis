@@ -40,7 +40,6 @@ for i in range(1, len(files)):
             for ip in data["data"]["ipv4_addresses"]:
                 tmpDict[domain][ip] = 1
         if data["status"] != "NOERROR":
-            validIpCount -= 1
             if len(domainIpDict[domain]) > 0:
                 disAppearIpCount += 1
         elif len(domainIpDict[domain]) == 0:
