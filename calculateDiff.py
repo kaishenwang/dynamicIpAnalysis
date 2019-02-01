@@ -22,7 +22,7 @@ for line in rr:
             domainIpDict[domain][ip] = 1
 print(str(validIpCount*100.0/len(domainIpDict)) +  "% has valid ip")
 
-for i in range(1, len(files)):
+for i in range(1, max(len(files),24*5*3)):
     with open(join(folderPath, files[i])) as f:
         rr = f.readlines()
     newIpCount = 0
@@ -41,8 +41,8 @@ for i in range(1, len(files)):
         elif data["data"]["ipv4_addresses"][0] not in domainIpDict[domain].keys():
             ipChangeCount += 1
     message = str(i)+","+str(i/3.0)+","
-    message += str(math.log(validIpCount*1.0/len(domainIpDict)))+","
-    message += str(math.log(newIpCount*1.0/len(domainIpDict)))+","
-    message += str(math.log(disAppearIpCount*1.0/len(domainIpDict)))+","
-    message += str(math.log(ipChangeCount*1.0/len(domainIpDict)))
+    message += str(validIpCount*100.0/len(domainIpDict))+","
+    message += str(newIpCount*100.0/len(domainIpDict))+","
+    message += str(disAppearIpCount*100.0/len(domainIpDict))+","
+    message += str(ipChangeCount*100.0/len(domainIpDict))+","
     print (message)
