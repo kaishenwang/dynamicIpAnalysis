@@ -22,7 +22,8 @@ for line in rr:
             domainIpDict[domain][ip] = 1
 print(str(validIpCount*100.0/len(domainIpDict)) +  "% has valid ip")
 
-for i in range(1, max(len(files),24*5*3)):
+
+for i in range(1, min(len(files),24*5*3)):
     with open(join(folderPath, files[i])) as f:
         rr = f.readlines()
     newIpCount = 0
