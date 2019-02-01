@@ -63,6 +63,6 @@ for i in range(1, min(2,len(files))):
     message += str(ipChangeCount*100.0/len(domainIpDict))+","
     print (message)
 
-sorted_list = sorted(domainChangeCount.items(), key=itemgetter(1)[0])
+sorted_list = sorted(domainChangeCount.items(), key=lambda x: x[1][0])
 with open('changeDomains.txt', 'w') as fp:
     fp.write('\n'.join('%s %s' % x for x in sorted_list))
