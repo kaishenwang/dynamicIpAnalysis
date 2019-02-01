@@ -26,7 +26,7 @@ for line in rr:
             domainIpDict[domain][ip] = 1
 print(str(validIpCount*100.0/len(domainIpDict)) +  "% has valid ip")
 
-for i in range(1, min(2,len(files))):
+for i in range(1, min(5*24*3,len(files))):
     with open(join(folderPath, files[i])) as f:
         rr = f.readlines()
     newIpCount = 0
@@ -63,6 +63,6 @@ for i in range(1, min(2,len(files))):
     message += str(ipChangeCount*100.0/len(domainIpDict))+","
     print (message)
 
-sorted_list = sorted(domainChangeCount.items(), key=lambda x: x[1][0])
+sorted_list = sorted(domainChangeCount.items(), key=lambda x: x[1][0], reverse=True)
 with open('changeDomains.txt', 'w') as fp:
     fp.write('\n'.join('%s %s' % x for x in sorted_list))
