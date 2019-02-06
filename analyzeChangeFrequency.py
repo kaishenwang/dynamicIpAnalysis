@@ -5,6 +5,8 @@ ipDict = {}
 countFrequency = {}
 timeInterval = int(sys.argv[1])
 for line in sys.stdin:
+    if len(line) < 10:
+        continue
     data = json.loads(line)
     domain = data["name"]
     if domain not in ipDict.keys():
@@ -24,7 +26,7 @@ for line in sys.stdin:
 
 sorted_list = sorted(countFrequency.items(), key=lambda x: x[1], reverse=True)
 for data in sorted_list:
-    if (float(data[1]) == 0.0)
+    if (float(data[1]) == 0.0):
         print(timeInterval*2)
     else:
         print(timeInterval/float(data[1]))
