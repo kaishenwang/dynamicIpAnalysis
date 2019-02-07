@@ -13,8 +13,8 @@ def updateDeq(fileName):
     for line in rr:
         data = json.loads(line)
         domain = data["name"]
-        if data["status"] == "NOERROR":
-            deq[-1][domain] = {}
+        deq[-1][domain] = {}
+        if data["status"] == "NOERROR":    
             for ip in data["data"]["ipv4_addresses"]:
                 deq[-1][domain][ip] = 1
 
