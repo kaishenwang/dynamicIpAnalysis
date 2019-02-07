@@ -42,7 +42,7 @@ for i in range(1, min(len(files),24*5*3)):
                 if firstIp == ip:
                     changeIp = False
                     break
-            if firstIp:
+            if changeIp:
                 ipChangeCount += 1
     message = str(i)+","+str(i/3.0)+","
     message += str(validIpCount*100.0/totalIpCount)+","
