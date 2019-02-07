@@ -14,6 +14,7 @@ with open(join(folderPath, files[0])) as f:
 for line in rr:
     totalIpCount += 1
     data = json.loads(line)
+    domainIpDict[data["name"]] = ""
     if data["status"] == "NOERROR":
         domainIpDict[data["name"]] = data["data"]["ipv4_addresses"][0]
 
@@ -30,9 +31,9 @@ for i in range(1, min(len(files),24*5*3)):
         domain = data["name"]
         if data["status"] != "NOERROR":
             validIpCount -= 1
-            if domain in domainIpDict.keys():
+            if len(domainIpDict[domain]) > 0:
                 disAppearIpCount += 1
-        elif domain not in domainIpDict.keys():
+        elif len(domainIpDict[domain]) == 0:
             newIpCount += 1
         else:
             firstIp = domainIpDict[domain]
