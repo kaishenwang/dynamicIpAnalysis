@@ -42,8 +42,6 @@ for i in range(3):
 
 for i in range(3, min(5*24*3,len(files))):
     updateDeq(join(folderPath, files[i]))
-    with open(join(folderPath, files[i])) as f:
-        rr = f.readlines()
     newIpCount = 0
     disAppearIpCount = 0
     ipChangeCount = 0
