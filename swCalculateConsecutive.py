@@ -15,8 +15,10 @@ def updateDeq(fileName):
     for line in rr:
         data = json.loads(line)
         domain = data["name"]
+        deq[-1][domain] = {}
         if data["status"] == "NOERROR":
-            deq[-1][domain] = {}
+            # record first ip
+            deq[-1][domain]["0"] = data["data"]["ipv4_addresses"][0]
             for ip in data["data"]["ipv4_addresses"]:
                 deq[-1][domain][ip] = 1
 
@@ -46,8 +48,27 @@ for i in range(3, min(5*24*3,len(files))):
     disAppearIpCount = 0
     ipChangeCount = 0
     validIpCount = 0
+    for domain, ips in deq[0].items():
+        if len(ips) == 0:
+            if len(deq[1][domain]) > 0 and len(deq[2][domain]) > 0 and len(deq[3][domain]) > 0:
+                newIpCount += 1
+                domainChangeCount[domain][0] += 1
+                domainChangeCount[domain][1] += 1
+        elif len(deq[1][domain]) == 0 and len(deq[2][domain]) == 0 and len(deq[3][domain]) == 0:
+            disAppearIpCount += 1
+            domainChangeCount[domain][0] += 1
+            domainChangeCount[domain][2] += 1
+        else:
+            firstIp = ips["0"]
+            if firstIp not in deq[1][domain].keys() and firstIp not in deq[2][domain].keys() and firstIp not in deq[3][domain].keys():
+                ipChangeCount += 1
+                domainChangeCount[domain][0] += 1
+                domainChangeCount[domain][3] += 1
+        if len(deq[1][domain]) > 0 or len(deq[2][domain]) > 0 or len(deq[3][domain]) > 0:
+            validIpCount += 1
+    deq.popleft()
 
-    message = str(i)+","+str(i/3.0)+","
+    message = str(i-2)+","+str((i-2)/3.0)+","
     message += str(validIpCount*100.0/totalIpCount)+","
     message += str(newIpCount*100.0/totalIpCount)+","
     message += str(disAppearIpCount*100.0/totalIpCount)+","
