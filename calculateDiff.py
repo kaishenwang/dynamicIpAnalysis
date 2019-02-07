@@ -40,6 +40,7 @@ for i in range(1, min(len(files),24*5*3)):
             for ip in data["data"]["ipv4_addresses"]:
                 if firstIp == ip:
                     changeIp = False
+                    break
             if firstIp:
                 ipChangeCount += 1
     message = str(i)+","+str(i/3.0)+","

@@ -56,6 +56,7 @@ for i in range(3, min(len(files),24*5*3)):
             for d in deq:
                 if firstIp in d[domain].keys():
                     changeIp = False
+                    break
             if changeIp:
                 ipChangeCount += 1
         if len(deq[0][domain]) > 0 or len(deq[1][domain]) > 0 or len(deq[2][domain]) > 0:
