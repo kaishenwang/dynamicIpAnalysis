@@ -2,7 +2,6 @@ import json
 from os import listdir
 from os.path import isfile, join
 import copy
-import math
 from operator import itemgetter
 
 folderPath = "/home/kwang40/alookupResult/"
