@@ -69,8 +69,8 @@ for i in range(3, min(5*24*3,len(files))-3):
                 disAppearIpCount += 1
                 domainChangeCount[domain][0] += 1
                 domainChangeCount[domain][2] += 1
-                firstIp = ips['0']
             else:
+                firstIp = ips['0']
                 if firstIp not in deq[3][domain].keys() and firstIp not in deq[4][domain].keys() and firstIp not in deq[5][domain].keys():
                     ipChangeCount += 1
                     domainChangeCount[domain][0] += 1
