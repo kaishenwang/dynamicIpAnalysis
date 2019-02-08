@@ -14,7 +14,7 @@ def updateDeq(fileName):
         data = json.loads(line)
         domain = data["name"]
         deq[-1][domain] = {}
-        if data["status"] == "NOERROR":    
+        if data["status"] == "NOERROR":
             for ip in data["data"]["ipv4_addresses"]:
                 deq[-1][domain][ip] = 1
 
@@ -46,7 +46,7 @@ for i in range(3, min(len(files),24*5*3)):
     validIpCount = 0
     for domain,ip in domainIpDict.items():
         if len(ip) == 0:
-            if len(deq[0][domain]) > 0 and len(deq[1][domain]) > 0 and len(deq[2][domain]) > 0:
+            if len(deq[0][domain]) > 0 or len(deq[1][domain]) > 0 or len(deq[2][domain]) > 0:
                 newIpCount += 1
         elif len(deq[0][domain]) == 0 and len(deq[1][domain]) == 0 and len(deq[2][domain]) == 0:
             disAppearIpCount += 1
