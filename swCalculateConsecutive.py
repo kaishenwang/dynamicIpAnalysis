@@ -6,7 +6,7 @@ from operator import itemgetter
 from collections import deque
 
 folderPath = "/home/kwang40/alookupResult/"
-deq = deque(maxlen=4)
+deq = deque(maxlen=6)
 
 def updateDeq(fileName):
     with open(fileName) as f:
@@ -37,41 +37,52 @@ for line in rr:
     domainChangeCount[domain] = [0]*4
 
 
-for i in range(3):
+for i in range(6):
     updateDeq(join(folderPath, files[i]))
 
-for i in range(3, min(5*24*3,len(files))):
-    updateDeq(join(folderPath, files[i]))
+# new ip: previous three has no valid ip (i compare to i-1, i-2, i-3)
+#         compare 3 to 0,1,2
+# disappear ip: previous one has valid ip, next three (including this one)
+#              has no valid ip (i-1 compare to i, i+1, i+2)
+#              compare 2 to 3,4,5
+# change ip: previous ip[0] not in next three ips (i-1 compare to i, i+1, i+2)
+#            compare 2 to 3,4,5
+# vaid ip: have valid ip in i, i+1, i+2
+#          check 3,4,5
+# keep a deque of length 6, after analyze, update data in i+3
+for i in range(3, min(5*24*3,len(files))-3):
     newIpCount = 0
+    for domain, ips in deq[3].items():
+        if len(ips) > 0 and len(deq[0][domain]) == 0 and len(deq[1][domain]) == 0 and len(deq[2][domain]) == 0:
+            newIpCount += 1
+            domainChangeCount[domain][0] += 1
+            domainChangeCount[domain][1] += 1
     disAppearIpCount = 0
     ipChangeCount = 0
     validIpCount = 0
-    for domain, ips in deq[0].items():
-        if len(ips) == 0:
-            if len(deq[1][domain]) > 0 and len(deq[2][domain]) > 0 and len(deq[3][domain]) > 0:
-                newIpCount += 1
-                domainChangeCount[domain][0] += 1
-                domainChangeCount[domain][1] += 1
-        elif len(deq[1][domain]) == 0 and len(deq[2][domain]) == 0 and len(deq[3][domain]) == 0:
-            disAppearIpCount += 1
-            domainChangeCount[domain][0] += 1
-            domainChangeCount[domain][2] += 1
-        else:
-            firstIp = ips["0"]
-            if firstIp not in deq[1][domain].keys() and firstIp not in deq[2][domain].keys() and firstIp not in deq[3][domain].keys():
-                ipChangeCount += 1
-                domainChangeCount[domain][0] += 1
-                domainChangeCount[domain][3] += 1
-        if len(deq[1][domain]) > 0 or len(deq[2][domain]) > 0 or len(deq[3][domain]) > 0:
+    for domain, ips in deq[2].items():
+        validIp = (len(deq[3][domain]) > 0 or len(deq[4][domain]) > 0 or len(deq[5][domain]) > 0)
+        if validIp:
             validIpCount += 1
-    deq.popleft()
+        if len(ips) > 0:
+            if not validIp:
+                disAppearIpCount += 1
+                domainChangeCount[domain][0] += 1
+                domainChangeCount[domain][2] += 1
+                firstIp = ips['0']
+            else:
+                if firstIp not in deq[3][domain].keys() and firstIp not in deq[4][domain].keys() and firstIp not in deq[5][domain].keys():
+                    ipChangeCount += 1
+                    domainChangeCount[domain][0] += 1
+                    domainChangeCount[domain][3] += 1
 
-    message = str(i-2)+","+str((i-2)/3.0)+","
+    message = str(i)+","+str((i)/3.0)+","
     message += str(validIpCount*100.0/totalIpCount)+","
     message += str(newIpCount*100.0/totalIpCount)+","
     message += str(disAppearIpCount*100.0/totalIpCount)+","
     message += str(ipChangeCount*100.0/totalIpCount)+","
     print (message)
+    updateDeq(join(folderPath, files[i+3]))
 
 sorted_list = sorted(domainChangeCount.items(), key=lambda x: x[1][0], reverse=True)
 with open('changeDomainsSlidingWindow.txt', 'w') as fp:
