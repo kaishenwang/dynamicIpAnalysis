@@ -10,6 +10,6 @@ ax.hist(data, bins = 500, histtype='step',normed=1, cumulative=True, label='tota
 ax.grid(True)
 ax.legend(loc='right')
 ax.set_title('CDF')
-ax.set_xlabel('average time to change ip')
+ax.set_xlabel('average time to change ip info')
 ax.set_ylabel('')
 plt.show()
