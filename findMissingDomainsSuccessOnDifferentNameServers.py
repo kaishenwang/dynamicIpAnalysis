@@ -1,6 +1,8 @@
 from os import listdir
 from os.path import isfile, join
 import json
+import sys
+
 onlyfiles = [f for f in listdir('.') if isfile(join('.', f))]
 
 success_count = {}
@@ -24,5 +26,8 @@ for k,v in success_count.items():
     distribute_count[v] = 0
   distribute_count[v] += 1
 
-print (totalCount)
-print (distribute_count)
+#print (totalCount)
+#print (distribute_count)
+for k,v in distribute_count.items():
+    for i in range(v):
+        sys.stdout.write(str(k)+',')
