@@ -23,4 +23,4 @@ with  open(sys.argv[1]) as rawUrlFile, open('effectiveURL.txt', 'w') as effectiv
         scheme = row[1]
         if len(scheme) == 0:
             scheme = 'http'
-        randSubURLFile.write(scheme + ':\\\\' + randSubDomain + '.' + row[3] + '\n')
+        randSubURLFile.write(scheme + '://' + randSubDomain + '.' + row[3] + '\n')
