@@ -1,6 +1,6 @@
 import sys
 import json
-#python buildZmapOut.py RR.json banner.json  zmap.txt
+#python buildZmapOut.py RR.json IPOpen.txt  zmap.txt
 IPs = {}
 with open (sys.argv[1]) as f:
     for line in f:
@@ -13,9 +13,7 @@ with open (sys.argv[1]) as f:
 
 with open(sys.argv[2]) as f:
     for line in f:
-        if line[:4] != 'null':
-            data = json.loads(line)
-            IPs[data['ip']] = True
+        IPs[line.rstrip()] = True
 
 with open(sys.argv[3],'w') as wf:
     for k,v in IPs.items():
