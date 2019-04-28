@@ -22,14 +22,14 @@ with open('banners.json') as f, open('noHttpDomains.txt', 'w') as wf:
         if line[:4] == 'null':
             continue
         data = json.loads(line.rstrip())
-        code = ''
+        code = -1
         if 'response' in data['data']['http']:
             code = data['data']['http']['response']['status_code']
-        elif 'redirect_response_chain' in in data['data']['http']:
-            code = data['data']['http']['redirect_response_chain']['status_code']
+        elif 'redirect_response_chain' in  data['data']['http']:
+            code = data['data']['http']['redirect_response_chain'][0]['status_code']
         else:
-            wf.write(data['domain'] + ',' + data['error'] + '\n')
-        if len(code) > 0:
+            wf.write(data['domain'] + ',' + data['error'].encode('ascii', 'ignore').decode('ascii') + '\n')
+        if code > 0:
             if code not in httpCode:
                 httpCode[code] = 0
             httpCode[code] += 1
@@ -37,4 +37,4 @@ with open('banners.json') as f, open('noHttpDomains.txt', 'w') as wf:
 sorted_code = sorted(httpCode.items(), key=lambda x: x[1], reverse=True)
 with open('httpCode.txt', 'w') as wf:
     for k,v in sorted_code:
-        wf.write(k + ',' + v + '\n')
+        wf.write(str(k) + ',' + str(v) + '\n')
